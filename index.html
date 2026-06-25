@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crush Mo Ko No? 💖</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    height:100vh;
+    overflow:hidden;
+    background:linear-gradient(135deg,#ffd6e7,#ffc2d1);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+}
+
+#btn{
+    position:absolute;
+    padding:18px 35px;
+    border:none;
+    border-radius:50px;
+    background:white;
+    color:#ff4d88;
+    font-size:22px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+    transition:.25s;
+}
+
+#surprise{
+    display:none;
+    text-align:center;
+    animation:fadeIn 1.5s ease;
+}
+
+.heart{
+    position:relative;
+    width:180px;
+    height:180px;
+    background:#ff4d88;
+    margin:auto;
+    transform:rotate(-45deg);
+    animation:beat 2s infinite;
+}
+
+.heart::before,
+.heart::after{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    background:#ff4d88;
+    border-radius:50%;
+}
+
+.heart::before{
+    top:-90px;
+    left:0;
+}
+
+.heart::after{
+    top:0;
+    left:90px;
+}
+
+.message{
+    margin-top:70px;
+    color:white;
+    font-size:38px;
+    font-weight:bold;
+    text-shadow:0 0 10px rgba(255,255,255,.8);
+}
+
+.floatHeart{
+    position:absolute;
+    font-size:25px;
+    animation:floatUp linear forwards;
+}
+
+@keyframes beat{
+    0%,100%{
+        transform:rotate(-45deg) scale(.98);
+    }
+    50%{
+        transform:rotate(-45deg) scale(1.03);
+    }
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:scale(.8);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+@keyframes floatUp{
+    from{
+        transform:translateY(0);
+        opacity:1;
+    }
+    to{
+        transform:translateY(-100vh);
+        opacity:0;
+    }
+}
+</style>
+</head>
+<body>
+
+<button id="btn">Click Me 😊</button>
+
+<div id="surprise">
+    <div class="heart"></div>
+    <div class="message">
+        💖 Crush Mo Ko No?<br>
+        Kaya Tinuloy Mo? 😳
+    </div>
+</div>
+
+<script>
+const btn = document.getElementById("btn");
+const surprise = document.getElementById("surprise");
+
+let clicks = 0;
+
+const texts = [
+    "😜 Hindi Pa",
+    "😂 Pindot Pa",
+    "🤭 Konti Pa",
+    "😳 Last Na"
+];
+
+btn.addEventListener("click", () => {
+
+    clicks++;
+
+    if(clicks < 5){
+
+        btn.innerHTML = texts[clicks - 1];
+
+        const maxX = window.innerWidth - btn.offsetWidth - 20;
+        const maxY = window.innerHeight - btn.offsetHeight - 20;
+
+        btn.style.left = Math.random() * maxX + "px";
+        btn.style.top = Math.random() * maxY + "px";
+    }
+    else{
+
+        btn.style.display = "none";
+        surprise.style.display = "block";
+
+        // Floating hearts
+        for(let i=0;i<40;i++){
+
+            const heart = document.createElement("div");
+            heart.className = "floatHeart";
+
+            const emojis = ["💖","💕","💗","❤️"];
+
+            heart.innerHTML =
+                emojis[Math.floor(Math.random()*emojis.length)];
+
+            heart.style.left =
+                Math.random()*100 + "vw";
+
+            heart.style.bottom = "-30px";
+
+            heart.style.animationDuration =
+                (4 + Math.random()*3) + "s";
+
+            document.body.appendChild(heart);
+
+            setTimeout(()=>{
+                heart.remove();
+            },7000);
+        }
+    }
+});
+</script>
+
+</body>
+</html>
